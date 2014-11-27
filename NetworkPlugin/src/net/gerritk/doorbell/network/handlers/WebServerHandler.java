@@ -31,6 +31,13 @@ public class WebServerHandler extends AbstractHandler {
 				entry.getValue().handle(target, baseRequest, request, response);
 			}
 		}
+
+		if(!baseRequest.isHandled()) {
+			response.setStatus(HttpServletResponse.SC_OK);
+			response.setContentType("text/html");
+			baseRequest.setHandled(true);
+			response.getWriter().write("<h1 style='font-family: Verdana, Geneva, sans-serif;'>K.Doorbell System</h1>");
+		}
 	}
 
 	public boolean addHandler(String target, Handler handler) {
