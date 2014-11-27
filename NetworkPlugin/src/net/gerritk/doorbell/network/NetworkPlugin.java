@@ -1,9 +1,10 @@
 package net.gerritk.doorbell.network;
 
 import net.gerritk.doorbell.interfaces.DoorbellPlugin;
-import net.gerritk.doorbell.network.handlers.JsonRpcHandler;
-import net.gerritk.doorbell.network.handlers.WebServerHandler;
+import net.gerritk.doorbell.network.servlets.JsonRpcServlet;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.log.Log;
 
 public class NetworkPlugin implements DoorbellPlugin {
@@ -16,12 +17,16 @@ public class NetworkPlugin implements DoorbellPlugin {
 		System.out.println("[NetworkPlugin] Initializing...");
 		boolean success = true;
 
-		WebServerHandler handler = new WebServerHandler();
-		handler.addHandler("/jsonrpc", new JsonRpcHandler());
+		ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+		context.setContextPath("/");
+
+		context.addServlet(new ServletHolder(new JsonRpcServlet()), "/jsonrpc/*");
+		// TODO add websocket servlet
+		// TODO add file servlet
 
 		server = new Server(81);
 		server.setStopAtShutdown(true);
-		server.setHandler(handler);
+		server.setHandler(context);
 
 		try {
 			server.start();

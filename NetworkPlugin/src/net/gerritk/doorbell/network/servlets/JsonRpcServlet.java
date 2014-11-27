@@ -1,24 +1,23 @@
-package net.gerritk.doorbell.network.handlers;
+package net.gerritk.doorbell.network.servlets;
 
 import com.thetransactioncompany.jsonrpc2.*;
 import com.thetransactioncompany.jsonrpc2.server.Dispatcher;
 import com.thetransactioncompany.jsonrpc2.server.MessageContext;
 import com.thetransactioncompany.jsonrpc2.server.RequestHandler;
-import org.eclipse.jetty.server.Request;
-import org.eclipse.jetty.server.handler.AbstractHandler;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 
-public class JsonRpcHandler extends AbstractHandler {
+public class JsonRpcServlet extends HttpServlet {
 	private final Dispatcher dispatcher;
 	private final JSONRPC2Parser parser;
 
-	public JsonRpcHandler() {
+	public JsonRpcServlet() {
 		dispatcher = new Dispatcher();
 		dispatcher.register(new RequestHandler() {
 			@Override
@@ -43,27 +42,24 @@ public class JsonRpcHandler extends AbstractHandler {
 	}
 
 	@Override
-	public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		if (request.getMethod().equals("POST")) {
-			BufferedReader reader = request.getReader();
-			String line = reader.readLine();
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		BufferedReader reader = req.getReader();
+		String line = reader.readLine();
 
-			if (line != null && !line.trim().isEmpty()) {
-				JSONRPC2Request jsonRequest = null;
-				try {
-					jsonRequest = parser.parseJSONRPC2Request(line);
-				} catch (JSONRPC2ParseException e) {
-					e.printStackTrace();
-				}
+		if (line != null && !line.trim().isEmpty()) {
+			JSONRPC2Request jsonRequest = null;
+			try {
+				jsonRequest = parser.parseJSONRPC2Request(line);
+			} catch (JSONRPC2ParseException e) {
+				e.printStackTrace();
+			}
 
-				if (jsonRequest != null) {
-					JSONRPC2Response jsonResponse = dispatcher.process(jsonRequest, null);
+			if (jsonRequest != null) {
+				JSONRPC2Response jsonResponse = dispatcher.process(jsonRequest, null);
 
-					response.setContentType("application/json-rpc");
-					response.setStatus(HttpServletResponse.SC_OK);
-					baseRequest.setHandled(true);
-					response.getWriter().write(jsonResponse.toJSONString());
-				}
+				resp.setContentType("application/json-rpc");
+				resp.setStatus(HttpServletResponse.SC_OK);
+				resp.getWriter().write(jsonResponse.toJSONString());
 			}
 		}
 	}
