@@ -10,7 +10,6 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 
 public class PluginManager implements Service {
@@ -46,7 +45,7 @@ public class PluginManager implements Service {
 			for(File pluginFile : files) {
 				try {
 					JarFile pluginJar = new JarFile(pluginFile);
-					String mainClass = pluginJar.getManifest().getMainAttributes().getValue(Attributes.Name.MAIN_CLASS);
+					String mainClass = pluginJar.getManifest().getMainAttributes().getValue("Plugin-Class");
 
 					Class clazz = new URLClassLoader(new URL[]{pluginFile.toURI().toURL()}).loadClass(mainClass);
 					Class[] interfaces = clazz.getInterfaces();
