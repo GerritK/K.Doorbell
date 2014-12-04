@@ -1,6 +1,7 @@
 package net.gerritk.doorbell.network;
 
 import net.gerritk.doorbell.interfaces.DoorbellPlugin;
+import net.gerritk.doorbell.network.servlets.EventServlet;
 import net.gerritk.doorbell.network.servlets.JsonRpcServlet;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -21,7 +22,7 @@ public class NetworkPlugin implements DoorbellPlugin {
 		context.setContextPath("/");
 
 		context.addServlet(new ServletHolder(new JsonRpcServlet()), "/jsonrpc/*");
-		// TODO add websocket servlet
+		context.addServlet(new ServletHolder(new EventServlet()), "/websockets/*");
 		// TODO add file servlet
 
 		server = new Server(81);

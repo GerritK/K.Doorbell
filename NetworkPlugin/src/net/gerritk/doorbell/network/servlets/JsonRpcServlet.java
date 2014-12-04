@@ -43,6 +43,12 @@ public class JsonRpcServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String contentType = req.getContentType();
+		if(!contentType.equals("application/json-rpc") && !contentType.equals("application/json") && !contentType.equals("application/jsonrequest")) {
+			resp.setContentType("application/json-rpc");
+			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		}
+
 		BufferedReader reader = req.getReader();
 		String line = reader.readLine();
 
@@ -51,6 +57,8 @@ public class JsonRpcServlet extends HttpServlet {
 			try {
 				jsonRequest = parser.parseJSONRPC2Request(line);
 			} catch (JSONRPC2ParseException e) {
+				resp.setContentType("application/json-rpc");
+				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				e.printStackTrace();
 			}
 

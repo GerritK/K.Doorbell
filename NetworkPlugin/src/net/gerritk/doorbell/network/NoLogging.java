@@ -54,6 +54,11 @@ public class NoLogging implements Logger {
 	}
 
 	@Override
+	public void debug(String s, long l) {
+
+	}
+
+	@Override
 	public void debug(Throwable throwable) {
 
 	}
