@@ -4,7 +4,6 @@ import net.gerritk.doorbell.events.DoorbellEvent;
 import net.gerritk.doorbell.events.DoorbellListener;
 import net.gerritk.doorbell.services.DoorbellService;
 import net.gerritk.doorbell.services.ServiceContainer;
-import net.minidev.json.JSONObject;
 import org.eclipse.jetty.websocket.api.RemoteEndpoint;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.WebSocketAdapter;
@@ -44,18 +43,10 @@ public class EventWebSocket extends WebSocketAdapter implements DoorbellListener
 
 	@Override
 	public void onRinging(DoorbellEvent event) {
-		JSONObject result = new JSONObject();
-		result.put("event", "doorbell.ringing");
-		result.put("identifier", event.identifier);
-		result.put("timestamp", event.timestamp);
-
-		JSONObject send = new JSONObject();
-		send.put("result", result);
-
 		if(isConnected()) {
 			try {
 				RemoteEndpoint remote = getRemote();
-				remote.sendString(send.toJSONString());
+				remote.sendString(event.toJSON().toJSONString());
 				remote.flush();
 			} catch (IOException e) {
 				e.printStackTrace();
