@@ -1,0 +1,24 @@
+<component name="libraryTable">
+  <library name="org.eclipse.jetty:jetty-servlets:9.2.1.v20140609" type="repository">
+    <properties maven-id="org.eclipse.jetty:jetty-servlets:9.2.1.v20140609" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-servlets/9.2.1.v20140609/jetty-servlets-9.2.1.v20140609.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-continuation/9.2.1.v20140609/jetty-continuation-9.2.1.v20140609.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-http/9.2.1.v20140609/jetty-http-9.2.1.v20140609.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-util/9.2.1.v20140609/jetty-util-9.2.1.v20140609.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-webapp/9.2.1.v20140609/jetty-webapp-9.2.1.v20140609.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-xml/9.2.1.v20140609/jetty-xml-9.2.1.v20140609.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-servlet/9.2.1.v20140609/jetty-servlet-9.2.1.v20140609.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-security/9.2.1.v20140609/jetty-security-9.2.1.v20140609.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-server/9.2.1.v20140609/jetty-server-9.2.1.v20140609.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-io/9.2.1.v20140609/jetty-io-9.2.1.v20140609.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-servlets/9.2.1.v20140609/jetty-servlets-9.2.1.v20140609-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-servlets/9.2.1.v20140609/jetty-servlets-9.2.1.v20140609-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="net.minidev:json-smart:1.1.1" type="repository">
+    <properties maven-id="net.minidev:json-smart:1.1.1" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/net/minidev/json-smart/1.1.1/json-smart-1.1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/net/minidev/json-smart/1.1.1/json-smart-1.1.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/net/minidev/json-smart/1.1.1/json-smart-1.1.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
