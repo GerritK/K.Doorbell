@@ -1,0 +1,5 @@
+{
+  "name": "NetworkPlugin",
+  "main": "net.gerritk.doorbell.network.NetworkPlugin",
+  "version": "0.1"
+}

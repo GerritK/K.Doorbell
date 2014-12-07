@@ -1,6 +1,6 @@
 package net.gerritk.doorbell.network;
 
-import net.gerritk.doorbell.interfaces.DoorbellPlugin;
+import net.gerritk.doorbell.plugins.Plugin;
 import net.gerritk.doorbell.network.servlets.EventServlet;
 import net.gerritk.doorbell.network.servlets.JsonRpcServlet;
 import org.eclipse.jetty.server.Server;
@@ -8,7 +8,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.log.Log;
 
-public class NetworkPlugin implements DoorbellPlugin {
+public class NetworkPlugin extends Plugin {
 	private Server server;
 
 	@Override
@@ -48,10 +48,12 @@ public class NetworkPlugin implements DoorbellPlugin {
 	public void dispose() {
 		System.out.println("[NetworkPlugin] Disposing...");
 
-		try {
-			server.stop();
-		} catch (Exception e) {
-			e.printStackTrace();
+		if(server != null) {
+			try {
+				server.stop();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		System.out.println("[NetworkPlugin] Finished disposing.");

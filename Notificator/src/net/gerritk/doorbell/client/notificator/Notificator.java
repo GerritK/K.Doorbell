@@ -16,12 +16,13 @@ import java.util.Vector;
 
 @WebSocket
 public class Notificator {
+	public static String host = "localhost"; // 192.168.178.41
 	WebSocketClient webSocket;
 
 	public Notificator() {
 		webSocket = new WebSocketClient();
 		try {
-			URI uri = new URI("ws://localhost:81/websockets/");
+			URI uri = new URI("ws://" + host + ":81/websockets/");
 			webSocket.start();
 			ClientUpgradeRequest request = new ClientUpgradeRequest();
 			webSocket.connect(this, uri, request);
@@ -48,7 +49,7 @@ public class Notificator {
 	}
 
 	public static void main(String[] args) throws MalformedURLException {
-		JSONRPC2Session session = new JSONRPC2Session(new URL("http://localhost:81/jsonrpc"));
+		JSONRPC2Session session = new JSONRPC2Session(new URL("http://" + host + ":81/jsonrpc"));
 
 		Vector<Object> params = new Vector<Object>();
 		params.add("hello world :)");

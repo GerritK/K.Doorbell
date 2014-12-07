@@ -46,7 +46,7 @@ public class EventWebSocket extends WebSocketAdapter implements DoorbellListener
 		if(isConnected()) {
 			try {
 				RemoteEndpoint remote = getRemote();
-				remote.sendString(event.toJSON().toJSONString());
+				remote.sendString(event.toJSONString());
 				remote.flush();
 			} catch (IOException e) {
 				e.printStackTrace();

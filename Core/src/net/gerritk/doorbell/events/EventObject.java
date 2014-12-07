@@ -23,8 +23,7 @@ public class EventObject implements JSONConvertable {
 		JSONObject result = new JSONObject();
 
 		for(Field field : fields) {
-			ConvertToJSON[] convertToJSON = field.getAnnotationsByType(ConvertToJSON.class);
-			if(convertToJSON.length == 1) {
+			if(field.isAnnotationPresent(ConvertToJSON.class)) {
 				try {
 					result.put(field.getName(), field.get(this));
 				} catch (IllegalAccessException e) {
@@ -44,5 +43,10 @@ public class EventObject implements JSONConvertable {
 		}
 
 		return event;
+	}
+
+	@Override
+	public String toJSONString() {
+		return toJSON().toJSONString();
 	}
 }

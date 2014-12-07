@@ -1,0 +1,18 @@
+<component name="libraryTable">
+  <library name="org.eclipse.jetty.websocket:websocket-client:9.2.1.v20140609" type="repository">
+    <properties maven-id="org.eclipse.jetty.websocket:websocket-client:9.2.1.v20140609" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/websocket/websocket-client/9.2.1.v20140609/websocket-client-9.2.1.v20140609.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-util/9.2.1.v20140609/jetty-util-9.2.1.v20140609.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-io/9.2.1.v20140609/jetty-io-9.2.1.v20140609.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/websocket/websocket-common/9.2.1.v20140609/websocket-common-9.2.1.v20140609.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/websocket/websocket-api/9.2.1.v20140609/websocket-api-9.2.1.v20140609.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/websocket/websocket-client/9.2.1.v20140609/websocket-client-9.2.1.v20140609-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/websocket/websocket-client/9.2.1.v20140609/websocket-client-9.2.1.v20140609-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

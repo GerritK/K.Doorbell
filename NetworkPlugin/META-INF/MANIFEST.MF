@@ -1,2 +1,19 @@
 Manifest-Version: 1.0
-Plugin-Class: net.gerritk.doorbell.network.NetworkPlugin
+Class-Path: libs/jsonrpc2-server-1.10.1.jar libs/json-smart-1.1.1.jar 
+ libs/jsonrpc2-base-1.34.4.jar libs/json-smart-1.1.1.jar libs/websocke
+ t-server-9.2.1.v20140609.jar libs/websocket-common-9.2.1.v20140609.ja
+ r libs/websocket-api-9.2.1.v20140609.jar libs/jetty-util-9.2.1.v20140
+ 609.jar libs/jetty-io-9.2.1.v20140609.jar libs/websocket-client-9.2.1
+ .v20140609.jar libs/websocket-servlet-9.2.1.v20140609.jar libs/javax.
+ servlet-api-3.1.0.jar libs/jetty-servlet-9.2.1.v20140609.jar libs/jet
+ ty-security-9.2.1.v20140609.jar libs/jetty-server-9.2.1.v20140609.jar
+  libs/jetty-http-9.2.1.v20140609.jar libs/jetty-servlets-9.2.1.v20140
+ 609.jar libs/jetty-continuation-9.2.1.v20140609.jar libs/jetty-http-9
+ .2.1.v20140609.jar libs/jetty-util-9.2.1.v20140609.jar libs/jetty-web
+ app-9.2.1.v20140609.jar libs/jetty-xml-9.2.1.v20140609.jar libs/jetty
+ -servlet-9.2.1.v20140609.jar libs/jetty-security-9.2.1.v20140609.jar 
+ libs/jetty-server-9.2.1.v20140609.jar libs/javax.servlet-api-3.1.0.ja
+ r libs/jetty-io-9.2.1.v20140609.jar libs/websocket-servlet-9.2.1.v201
+ 40609.jar libs/websocket-api-9.2.1.v20140609.jar libs/javax.servlet-a
+ pi-3.1.0.jar
+

@@ -2,7 +2,7 @@ package net.gerritk.doorbell;
 
 import net.gerritk.doorbell.events.DoorbellEvent;
 import net.gerritk.doorbell.services.DoorbellService;
-import net.gerritk.doorbell.services.PluginManager;
+import net.gerritk.doorbell.plugins.PluginManager;
 import net.gerritk.doorbell.services.ServiceContainer;
 
 import java.io.BufferedReader;
@@ -39,7 +39,7 @@ public class Main {
 
 						if(identifier != null) {
 							DoorbellService doorbellService = ServiceContainer.getService(DoorbellService.class);
-							DoorbellEvent event = new DoorbellEvent(identifier, System.currentTimeMillis());
+							DoorbellEvent event = new DoorbellEvent("doorbell.ring", identifier, System.currentTimeMillis());
 							doorbellService.fireRinging(event);
 						}
 					}
