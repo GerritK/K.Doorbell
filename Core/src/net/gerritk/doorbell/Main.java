@@ -1,5 +1,6 @@
 package net.gerritk.doorbell;
 
+import com.pi4j.io.gpio.RaspiPin;
 import net.gerritk.doorbell.events.DoorbellEvent;
 import net.gerritk.doorbell.services.DoorbellService;
 import net.gerritk.doorbell.plugins.PluginManager;
@@ -13,6 +14,7 @@ public class Main {
 	public Main() {
 		System.out.println("[Core] Initializing...");
 		boolean initResult = initializeServices();
+		initializeHardware();
 		System.out.println("[Core] Initialized!");
 
 		if(initResult) {
@@ -50,6 +52,16 @@ public class Main {
 		}
 
 		System.exit(0);
+	}
+
+	private void initializeHardware() {
+		final DoorbellService doorbellService = ServiceContainer.getService(DoorbellService.class);
+
+		Doorbell doorbell = new Doorbell("gerrit", RaspiPin.GPIO_07, RaspiPin.GPIO_00);
+		doorbellService.registerDoorbell(doorbell);
+
+		doorbell = new Doorbell("andrea", RaspiPin.GPIO_01, RaspiPin.GPIO_02);
+		doorbellService.registerDoorbell(doorbell);
 	}
 
 	private boolean initializeServices() {

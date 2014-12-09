@@ -4,6 +4,9 @@ import com.thetransactioncompany.jsonrpc2.*;
 import com.thetransactioncompany.jsonrpc2.server.Dispatcher;
 import com.thetransactioncompany.jsonrpc2.server.MessageContext;
 import com.thetransactioncompany.jsonrpc2.server.RequestHandler;
+import net.gerritk.doorbell.Doorbell;
+import net.gerritk.doorbell.services.DoorbellService;
+import net.gerritk.doorbell.services.ServiceContainer;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -23,7 +26,8 @@ public class JsonRpcServlet extends HttpServlet {
 			@Override
 			public String[] handledRequests() {
 				return new String[] {
-						"test.echo"
+						"test.echo",
+						"test.blink"
 				};
 			}
 
@@ -33,6 +37,16 @@ public class JsonRpcServlet extends HttpServlet {
 					List params = (List) request.getPositionalParams();
 					Object input = params.get(0);
 					return new JSONRPC2Response(input, request.getID());
+				} else if(request.getMethod().equals("test.blink")) {
+					List params = (List) request.getPositionalParams();
+
+					final DoorbellService doorbellService = ServiceContainer.getService(DoorbellService.class);
+					Doorbell doorbell = doorbellService.getDoorbell(params.get(0).toString());
+					if(doorbell != null) {
+						doorbell.blink();
+						return new JSONRPC2Response(true, request.getID());
+					}
+					return new JSONRPC2Response(false, request.getID());
 				} else {
 					return new JSONRPC2Response(JSONRPC2Error.METHOD_NOT_FOUND, request.getID());
 				}
