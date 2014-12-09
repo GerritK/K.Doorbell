@@ -63,6 +63,7 @@ public class Notificator {
 	@OnWebSocketClose
 	public void onClose(int statusCode, String reason) {
 		System.out.println("CLOSE::" + statusCode + "," + reason);
+		System.exit(0);
 	}
 
 	@OnWebSocketMessage
@@ -82,7 +83,7 @@ public class Notificator {
 						Vector<Object> args = new Vector<Object>();
 						args.add(doorbell);
 						try {
-							JSONRPC2Response response = rpcSession.send(new JSONRPC2Request("test.blink", args, "1"));
+							JSONRPC2Response response = rpcSession.send(new JSONRPC2Request("doorbell.blink", args, "1"));
 							System.out.println("RPC BLINK::" + response.getResult());
 						} catch (JSONRPC2SessionException e) {
 							e.printStackTrace();

@@ -11,6 +11,7 @@ public class Doorbell implements GpioPinListenerDigital {
 	private final String identifier;
 	private final GpioPinDigitalInput input;
 	private final GpioPinDigitalOutput output;
+
 	private DoorbellService doorbellService;
 
 	public Doorbell(String identifier, Pin input, Pin output) {
@@ -28,7 +29,7 @@ public class Doorbell implements GpioPinListenerDigital {
 	@Override
 	public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 		System.out.println("DOORBELL::" + identifier + "::" + event.getState());
-		if(event.getState() == PinState.HIGH) {
+		if(event.getState() == PinState.LOW) {
 			if(doorbellService != null) {
 				DoorbellService service = ServiceContainer.getService(DoorbellService.class);
 				service.fireRinging(new DoorbellEvent("doorbell.ring", identifier, System.currentTimeMillis()));
@@ -37,7 +38,7 @@ public class Doorbell implements GpioPinListenerDigital {
 	}
 
 	public void blink() {
-		output.blink(250, 750, PinState.HIGH);
+		output.blink(250, 745, PinState.HIGH);
 	}
 
 	public String getIdentifier() {
