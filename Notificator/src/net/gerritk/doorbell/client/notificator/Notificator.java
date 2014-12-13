@@ -28,7 +28,7 @@ public class Notificator {
 	private Session session;
 	private JSONRPC2Session rpcSession;
 	private URI webSocketUri;
-	private long lastPing;
+	private long ping;
 
 	public Notificator(String host) throws MalformedURLException {
 		webSocket = new WebSocketClient();
@@ -81,11 +81,10 @@ public class Notificator {
 			public void run() {
 				if(finalSession.isOpen()) {
 					RemoteEndpoint remote = finalSession.getRemote();
-					byte[] bytes = Notificator.this.toString().getBytes(Charset.forName("UTF-8"));
+					byte[] bytes = String.valueOf(System.currentTimeMillis()).getBytes(Charset.forName("UTF-8"));
 					ByteBuffer payload = ByteBuffer.wrap(bytes);
 					try {
 						remote.sendPing(payload);
-						lastPing = System.currentTimeMillis();
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -103,8 +102,12 @@ public class Notificator {
 		if(frame instanceof PongFrame) {
 			PongFrame pongFrame = (PongFrame) frame;
 			String payload = pongFrame.getPayloadAsUTF8();
-			if(payload.equals(toString())) {
-				System.out.println("PING::" + (System.currentTimeMillis() - lastPing));
+			try {
+				long lastPing = Long.parseLong(payload);
+				ping = System.currentTimeMillis() - lastPing;
+				System.out.println("PING::" + ping);
+			} catch (NumberFormatException e) {
+				System.out.println("PING::Invalid response: " + payload);
 			}
 		}
 	}
