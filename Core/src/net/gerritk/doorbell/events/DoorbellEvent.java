@@ -1,13 +1,13 @@
 package net.gerritk.doorbell.events;
 
-import net.gerritk.doorbell.annotations.ConvertToJSON;
+import net.gerritk.doorbell.annotations.SerializeToJSON;
 
 public class DoorbellEvent extends EventObject {
-	@ConvertToJSON
+	@SerializeToJSON
 	public final String event;
-	@ConvertToJSON
+	@SerializeToJSON
 	public final String identifier;
-	@ConvertToJSON
+	@SerializeToJSON
 	public final long timestamp;
 
 	public DoorbellEvent(String event, String identifier, long timestamp) {
