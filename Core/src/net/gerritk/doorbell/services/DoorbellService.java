@@ -37,7 +37,7 @@ public class DoorbellService implements Service {
 
 	public void registerDoorbell(Doorbell doorbell) {
 		if (doorbells.contains(doorbell)) {
-			System.out.println("[WARNING] Doorbell already registered.");
+			System.out.println("[WARNING] Doorbell '" + doorbell + "' already registered.");
 			return;
 		}
 
