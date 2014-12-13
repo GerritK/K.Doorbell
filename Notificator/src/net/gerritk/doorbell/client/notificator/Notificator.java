@@ -6,26 +6,31 @@ import com.thetransactioncompany.jsonrpc2.client.JSONRPC2Session;
 import com.thetransactioncompany.jsonrpc2.client.JSONRPC2SessionException;
 import net.minidev.json.JSONObject;
 import net.minidev.json.JSONValue;
+import org.eclipse.jetty.websocket.api.RemoteEndpoint;
 import org.eclipse.jetty.websocket.api.Session;
-import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
-import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
-import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
-import org.eclipse.jetty.websocket.api.annotations.WebSocket;
+import org.eclipse.jetty.websocket.api.annotations.*;
+import org.eclipse.jetty.websocket.api.extensions.Frame;
 import org.eclipse.jetty.websocket.client.ClientUpgradeRequest;
 import org.eclipse.jetty.websocket.client.WebSocketClient;
+import org.eclipse.jetty.websocket.common.frames.PongFrame;
 
+import java.io.IOException;
 import java.net.*;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.Vector;
 
 @WebSocket
 public class Notificator {
-	//public static String host = "localhost";
-	public static String host = "192.168.178.39";
-
 	private WebSocketClient webSocket;
+	private Session session;
 	private JSONRPC2Session rpcSession;
+	private URI webSocketUri;
+	private long lastPing;
 
-	public Notificator() throws MalformedURLException {
+	public Notificator(String host) throws MalformedURLException {
 		webSocket = new WebSocketClient();
 
 		rpcSession = new JSONRPC2Session(new URL("http://" + host + ":81/jsonrpc"));
@@ -44,26 +49,71 @@ public class Notificator {
 		}
 
 		try {
-			URI uri = new URI("ws://" + host + ":81/websockets/");
+			webSocketUri = new URI("ws://" + host + ":81/websockets/");
 			webSocket.start();
-			ClientUpgradeRequest request = new ClientUpgradeRequest();
-			webSocket.connect(this, uri, request);
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		connect();
+	}
+
+	public void connect() {
+		ClientUpgradeRequest request = new ClientUpgradeRequest();
+		try {
+			webSocket.connect(this, webSocketUri, request);
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	@OnWebSocketConnect
 	public void onConnect(Session session) {
-		System.out.println("CONNECT::" + session);
+		System.out.println("CONNECT::" + session.getRemoteAddress());
+		this.session = session;
+
+		final Timer timer = new Timer();
+		final Session finalSession = session;
+		TimerTask timerTask = new TimerTask() {
+			@Override
+			public void run() {
+				if(finalSession.isOpen()) {
+					RemoteEndpoint remote = finalSession.getRemote();
+					byte[] bytes = Notificator.this.toString().getBytes(Charset.forName("UTF-8"));
+					ByteBuffer payload = ByteBuffer.wrap(bytes);
+					try {
+						remote.sendPing(payload);
+						lastPing = System.currentTimeMillis();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					System.out.println("PING@" + finalSession.getRemoteAddress());
+				} else {
+					timer.cancel();
+				}
+			}
+		};
+		timer.scheduleAtFixedRate(timerTask, 10 * 1000, 60 * 1000);
+	}
+
+	@OnWebSocketFrame
+	public void onFrame(Frame frame) {
+		if(frame instanceof PongFrame) {
+			PongFrame pongFrame = (PongFrame) frame;
+			String payload = pongFrame.getPayloadAsUTF8();
+			if(payload.equals(toString())) {
+				System.out.println("PING::" + (System.currentTimeMillis() - lastPing));
+			}
+		}
 	}
 
 	@OnWebSocketClose
 	public void onClose(int statusCode, String reason) {
 		System.out.println("CLOSE::" + statusCode + "," + reason);
-		System.exit(0);
+		session = null;
+		connect();
 	}
 
 	@OnWebSocketMessage
@@ -95,6 +145,8 @@ public class Notificator {
 	}
 
 	public static void main(String[] args) throws MalformedURLException {
-		Notificator notificator = new Notificator();
+		if(args.length >= 1) {
+			Notificator notificator = new Notificator(args[0]);
+		}
 	}
 }

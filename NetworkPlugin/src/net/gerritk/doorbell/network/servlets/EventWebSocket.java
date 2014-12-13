@@ -13,7 +13,7 @@ import java.io.IOException;
 public class EventWebSocket extends WebSocketAdapter implements DoorbellListener {
 	@Override
 	public void onWebSocketConnect(Session session) {
-		System.out.println("SOCKET_CONNECT::" + session);
+		System.out.println("SOCKET_CONNECT::" + session.getRemoteAddress());
 		super.onWebSocketConnect(session);
 
 		DoorbellService doorbellService = ServiceContainer.getService(DoorbellService.class);

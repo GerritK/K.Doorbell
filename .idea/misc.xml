@@ -40,6 +40,9 @@
   </component>
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="net.gerritk.doorbell.network.rpc.RpcMethod" />
+    </list>
   </component>
   <component name="IdProvider" IDEtalkID="63B6D153C1EE8AE435A842A4A704D0E0" />
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">

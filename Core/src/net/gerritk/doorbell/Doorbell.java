@@ -23,22 +23,41 @@ public class Doorbell implements GpioPinListenerDigital {
 		this.input.addListener(this);
 
 		this.output = gpio.provisionDigitalOutputPin(output, PinState.LOW);
-		System.out.println("INITIALIZED_DOORBELL::" + identifier);
 	}
 
 	@Override
 	public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
-		System.out.println("DOORBELL::" + identifier + "::" + event.getState());
 		if(event.getState() == PinState.LOW) {
 			if(doorbellService != null) {
+				System.out.println("[Doorbell] '" + this + "' is ringing.");
 				DoorbellService service = ServiceContainer.getService(DoorbellService.class);
 				service.fireRinging(new DoorbellEvent("doorbell.ring", identifier, System.currentTimeMillis()));
 			}
 		}
 	}
 
+	@Override
+	public String toString() {
+		return identifier + "@in:" + input.getName() + ";out:" + output.getName();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Doorbell) {
+			Doorbell d = (Doorbell) obj;
+			return this.getIdentifier().equals(d.getIdentifier());
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return getIdentifier().hashCode();
+	}
+
 	public void blink() {
-		output.blink(250, 745, PinState.HIGH);
+		final long duration = 250;
+		output.blink(duration, 250 * (5 * 2 - 1) - 5, PinState.HIGH);
 	}
 
 	public String getIdentifier() {
