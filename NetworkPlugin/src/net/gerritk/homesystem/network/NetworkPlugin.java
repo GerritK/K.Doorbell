@@ -1,8 +1,8 @@
 package net.gerritk.homesystem.network;
 
+import net.gerritk.homesystem.network.servlets.JsonRpcServlet;
 import net.gerritk.homesystem.plugins.Plugin;
 import net.gerritk.homesystem.network.servlets.EventServlet;
-import net.gerritk.homesystem.network.servlets.JsonRpcServlet;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;

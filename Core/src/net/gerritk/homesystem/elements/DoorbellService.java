@@ -1,16 +1,14 @@
-package net.gerritk.homesystem.services;
+package net.gerritk.homesystem.elements;
 
-import net.gerritk.homesystem.Doorbell;
 import net.gerritk.homesystem.events.DoorbellEvent;
 import net.gerritk.homesystem.events.DoorbellListener;
-import net.gerritk.homesystem.interfaces.Service;
 
 import java.util.Vector;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class DoorbellService implements Service {
+public class DoorbellService implements ElementService<Doorbell>, DoorbellListener {
 	private Vector<DoorbellListener> listeners;
 	private Vector<Doorbell> doorbells;
 	private ExecutorService executor;
@@ -35,24 +33,27 @@ public class DoorbellService implements Service {
 		listeners = null;
 	}
 
-	public void registerDoorbell(Doorbell doorbell) {
+	@Override
+	public void registerElement(Doorbell doorbell) {
 		if (doorbells.contains(doorbell)) {
 			System.out.println("[WARNING] Doorbell '" + doorbell + "' already registered.");
 			return;
 		}
 
 		doorbells.add(doorbell);
-		doorbell.setDoorbellService(this);
+		doorbell.setService(this);
 	}
 
-	public void unregisterDoorbell(Doorbell doorbell) {
+	@Override
+	public void unregisterElement(Doorbell doorbell) {
 		doorbells.remove(doorbell);
-		if(doorbell.getDoorbellService() == this) {
-			doorbell.setDoorbellService(null);
+		if(doorbell.getService() == this) {
+			doorbell.setService(null);
 		}
 	}
 
-	public boolean containsDoorbell(Doorbell doorbell) {
+	@Override
+	public boolean isElementRegistered(Doorbell doorbell) {
 		return doorbells.contains(doorbell);
 	}
 
@@ -66,6 +67,13 @@ public class DoorbellService implements Service {
 		return null;
 	}
 
+	@Override
+	public void onRinging(DoorbellEvent event) {
+		for(DoorbellListener listener : listeners) {
+			listener.onRinging(event);
+		}
+	}
+
 	public void registerListener(DoorbellListener listener) {
 		if(listeners.contains(listener)) {
 			System.out.println("[WARNING] Listener already registered.");
@@ -76,16 +84,5 @@ public class DoorbellService implements Service {
 
 	public void unregisterListener(DoorbellListener listener) {
 		listeners.remove(listener);
-	}
-
-	public void fireRinging(final DoorbellEvent event) {
-		for(final DoorbellListener listener : listeners) {
-			executor.execute(new Runnable() {
-				@Override
-				public void run() {
-					listener.onRinging(event);
-				}
-			});
-		}
 	}
 }

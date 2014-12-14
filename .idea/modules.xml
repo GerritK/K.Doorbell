@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/Core/Core.iml" filepath="$PROJECT_DIR$/Core/Core.iml" />
       <module fileurl="file://$PROJECT_DIR$/NetworkPlugin/NetworkPlugin.iml" filepath="$PROJECT_DIR$/NetworkPlugin/NetworkPlugin.iml" group="Plugins" />
       <module fileurl="file://$PROJECT_DIR$/Notificator/Notificator.iml" filepath="$PROJECT_DIR$/Notificator/Notificator.iml" group="Clients" />
+      <module fileurl="file://$PROJECT_DIR$/RaspberryPi/RaspberryPi.iml" filepath="$PROJECT_DIR$/RaspberryPi/RaspberryPi.iml" />
     </modules>
   </component>
 </project>

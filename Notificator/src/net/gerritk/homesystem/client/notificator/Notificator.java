@@ -130,14 +130,19 @@ public class Notificator {
 			String event = String.valueOf(result.get("event"));
 
 			if(event != null && !event.trim().isEmpty()) {
-				if(event.equals("homesystem.ring")) {
+				if(event.equals("doorbell.ring")) {
 					String doorbell = String.valueOf(result.get("identifier"));
 					if(doorbell != null) {
 						Vector<Object> args = new Vector<Object>();
 						args.add(doorbell);
+						args.add(1000);
 						try {
-							JSONRPC2Response response = rpcSession.send(new JSONRPC2Request("homesystem.blink", args, "1"));
-							System.out.println("RPC BLINK::" + response.getResult());
+							JSONRPC2Response response = rpcSession.send(new JSONRPC2Request("doorbell.setOutput", args, "1"));
+							if(response.indicatesSuccess()) {
+								System.out.println("RESPONSE::" + response.getResult());
+							} else {
+								System.err.println("ERROR::" + response.getError());
+							}
 						} catch (JSONRPC2SessionException e) {
 							e.printStackTrace();
 						}

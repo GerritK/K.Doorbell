@@ -1,8 +1,8 @@
 package net.gerritk.homesystem.network.servlets;
 
-import net.gerritk.homesystem.events.DoorbellEvent;
 import net.gerritk.homesystem.events.DoorbellListener;
-import net.gerritk.homesystem.services.DoorbellService;
+import net.gerritk.homesystem.events.DoorbellEvent;
+import net.gerritk.homesystem.elements.DoorbellService;
 import net.gerritk.homesystem.services.ServiceContainer;
 import org.eclipse.jetty.websocket.api.RemoteEndpoint;
 import org.eclipse.jetty.websocket.api.Session;

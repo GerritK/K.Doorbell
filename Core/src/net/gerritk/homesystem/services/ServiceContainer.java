@@ -13,6 +13,12 @@ public class ServiceContainer implements Disposable {
 		services = new Vector<Service>();
 	}
 
+	public void initialize() {
+		for(Service service : services) {
+			service.initialize();
+		}
+	}
+
 	public <T extends Service> boolean add(T service) {
 		return service != null && !services.contains(service) && services.add(service);
 	}

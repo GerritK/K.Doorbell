@@ -1,0 +1,28 @@
+<component name="ArtifactManager">
+  <artifact build-on-make="true" name="RaspberryPi:jar">
+    <output-path>$PROJECT_DIR$/RaspberryPi/out</output-path>
+    <root id="root">
+      <element id="archive" name="RaspberryPi.jar">
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/RaspberryPi/META-INF/MANIFEST.MF" />
+        </element>
+        <element id="module-output" name="RaspberryPi" />
+        <element id="module-output" name="Core" />
+      </element>
+      <element id="directory" name="libs">
+        <element id="library" level="project" name="net.minidev:json-smart:1.1.1" />
+      </element>
+      <element id="directory" name="plugins">
+        <element id="archive" name="NetworkPlugin.jar">
+          <element id="module-output" name="NetworkPlugin" />
+        </element>
+        <element id="directory" name="libs">
+          <element id="library" level="project" name="com.thetransactioncompany:jsonrpc2-server:1.10.1" />
+          <element id="library" level="project" name="org.eclipse.jetty.websocket:websocket-server:9.2.1.v20140609" />
+          <element id="library" level="project" name="org.eclipse.jetty.websocket:websocket-servlet:9.2.1.v20140609" />
+          <element id="library" level="project" name="org.eclipse.jetty:jetty-servlets:9.2.1.v20140609" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
