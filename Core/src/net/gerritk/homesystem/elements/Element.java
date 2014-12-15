@@ -1,7 +1,7 @@
 package net.gerritk.homesystem.elements;
 
-public interface Element<E> {
-	public void setService(ElementService<Doorbell> elementService);
+public interface Element<E extends Element> {
+	public void setService(ElementService<E> elementService);
 
-	public ElementService<? extends E> getService();
+	public ElementService<E> getService();
 }
