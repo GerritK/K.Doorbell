@@ -2,12 +2,16 @@ package net.gerritk.homesystem.raspi;
 
 import com.pi4j.io.gpio.RaspiPin;
 import net.gerritk.homesystem.commands.CommandService;
+import net.gerritk.homesystem.commands.SimpleCommand;
 import net.gerritk.homesystem.elements.DoorbellService;
 import net.gerritk.homesystem.plugins.PluginManager;
-import net.gerritk.homesystem.raspi.commands.QuitCommand;
 import net.gerritk.homesystem.raspi.elements.RaspiDoorbell;
 import net.gerritk.homesystem.raspi.services.RaspiStatusService;
 import net.gerritk.homesystem.services.ServiceContainer;
+
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Callable;
 
 public class RaspiHomesystem {
 	public RaspiHomesystem() {
@@ -40,7 +44,19 @@ public class RaspiHomesystem {
 		final ServiceContainer serviceContainer = ServiceContainer.getInstance();
 
 		CommandService commandService = new CommandService();
-		commandService.registerCommand(new QuitCommand(this));
+		commandService.registerCommand(new SimpleCommand("quit", null, "Stops the homesystem.", "quit", new Callable<Boolean>() {
+			@Override
+			public Boolean call() throws Exception {
+				Timer timer = new Timer();
+				timer.schedule(new TimerTask() {
+					@Override
+					public void run() {
+						RaspiHomesystem.this.shutdown();
+					}
+				}, 100);
+				return true;
+			}
+		}));
 		serviceContainer.add(commandService);
 
 		serviceContainer.add(new DoorbellService());
